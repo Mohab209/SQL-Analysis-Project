@@ -1,0 +1,76 @@
+create database Store;
+
+use Store;
+
+create table Customers(
+	CustomerID int primary key,
+	FristName varchar(100),
+	LastName varchar(100),
+	Email varchar(100),
+	Phone varchar(100)
+);
+
+create table Products(
+	ProductID int primary key,
+	ProductName varchar(100),
+	Caregory varchar(100),
+	Price int 
+);
+
+create table Orders(
+	OrderID int primary key,
+	OrderDate date,
+	CustomerID int
+);
+
+create table orderDetails(
+	OrderDetailID int primary key,
+	OrderID int,
+	ProductID int,
+	Quantitty int,
+	UnitPrice int
+);
+
+insert into Customers(CustomerID,FristName,LastName,Phone,Email) values
+	(1,'Mohab','Ahmed','01033079606','mohab.ahmed.ntss@gmail.com'),
+	(2,'Ali','Fathy','01057830243','ali.fathy@gmail.com'),
+	(3,'Hosam','Mohamed','01069723854','hosam.mohamed@gmail.com')
+;
+
+insert into Products(ProductID,ProductName,Caregory,Price) values
+	(101,'HP EliteBook 840 G6','Electronics',20000),
+	(102,'Sofa 3*1','Furniture',2500),
+	(103,'Itel A70','Electronics',4000)
+;
+
+insert into Orders(OrderID,OrderDate,CustomerID) values
+	(201,'2025-3-1',1),
+	(202,'2025-8-30',2)
+;
+
+insert into orderDetails(OrderDetailID,OrderID,ProductID,Quantitty,UnitPrice) values
+	(1,201,101,2,20000),
+	(2,201,103,1,4000),
+	(3,202,102,4,2500),
+	(4,202,103,2,4000) 
+;
+
+
+select FristName,LastName,Phone
+from Customers;
+ 
+select ProductName
+from Products
+where Price > 100;
+ 
+select O.OrderID,C.FristName,O.OrderDate
+from Orders O
+left join Customers C on O.CustomerID=C.CustomerID;
+ 
+select SUM(Quantitty*UnitPrice) As TotalRevenue
+from orderDetails;
+ 
+select P.ProductName,SUM(OD.Quantitty) AS TotalQuantitySold
+from OrderDetails OD
+inner join Products P ON OD.ProductID = P.ProductID
+group by P.ProductName;
