@@ -20,13 +20,16 @@ create table Products(
 create table Orders(
 	OrderID int primary key,
 	OrderDate date,
-	CustomerID int
+	CustomerID int,
+	foreign key(CustomerID) references Customers(CustomerID)
 );
 
 create table orderDetails(
 	OrderDetailID int primary key,
 	OrderID int,
+	foreign key(OrderID) references Orders(OrderID),
 	ProductID int,
+	foreign key(ProductID) references Products(ProductID),
 	Quantity int,
 	UnitPrice int
 );
@@ -34,26 +37,22 @@ create table orderDetails(
 insert into Customers(CustomerID,FirstName,LastName,Phone,Email) values
 	(1,'Mohab','Ahmed','01033079606','mohab.ahmed.ntss@gmail.com'),
 	(2,'Ali','Fathy','01057830243','ali.fathy@gmail.com'),
-	(3,'Hosam','Mohamed','01069723854','hosam.mohamed@gmail.com')
-;
+	(3,'Hosam','Mohamed','01069723854','hosam.mohamed@gmail.com');
 
 insert into Products(ProductID,ProductName,Category,Price) values
 	(101,'HP EliteBook 840 G6','Electronics',20000),
 	(102,'Sofa 3*1','Furniture',2500),
-	(103,'Itel A70','Electronics',4000)
-;
+	(103,'Itel A70','Electronics',4000);
 
 insert into Orders(OrderID,OrderDate,CustomerID) values
 	(201,'2025-3-1',1),
-	(202,'2025-8-30',2)
-;
+	(202,'2025-8-30',2);
 
 insert into orderDetails(OrderDetailID,OrderID,ProductID,Quantity,UnitPrice) values
 	(1,201,101,2,20000),
 	(2,201,103,1,4000),
 	(3,202,102,4,2500),
-	(4,202,103,2,4000) 
-;
+	(4,202,103,2,4000) ;
 
 
 select FirstName,LastName,Phone
